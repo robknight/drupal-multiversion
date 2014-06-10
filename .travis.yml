@@ -49,6 +49,6 @@ before_script:
 
 script:
   # Run the tests and make sure we exit with the right status.
-  - php core/scripts/run-tests.sh --verbose --color --concurrency 4 --url http://127.0.0.1 --xml /tmp --all
+  - php core/scripts/run-tests.sh --php `which php` --verbose --color --concurrency 4 --url http://127.0.0.1 --xml /tmp --all
   - grep -q -e 'type="\(failure\|exception\)"\|Fatal error' /tmp/Drupal*.xml
   - exit $((1-$?))
