@@ -25,10 +25,8 @@ install:
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$TRAVIS_BUILD_DIR/../drupal?g" --in-place /etc/apache2/sites-available/default
   - sudo a2enmod rewrite actions fastcgi alias && sudo service apache2 restart
 
-  # Install Drush
+  # Download Drush and Drupal
   - composer global require drush/drush:dev-master
-
-  # Download Drupal
   - git clone --depth 1 --branch 8.x http://git.drupal.org/project/drupal.git $TRAVIS_BUILD_DIR/../drupal
   - cd $TRAVIS_BUILD_DIR/../drupal
 
@@ -44,6 +42,6 @@ install:
   - drush --yes pm-enable simpletest
 
 script:
-  # Run the tests and make sure we exit with the right status
+  # Run tests and exit with the correct status
   - php core/scripts/run-tests.sh --php `which php` --concurrency 7 --url http://127.0.0.1 --xml /tmp "Entity API"
   - if [[ `grep -e 'type="\(failure\|exception\)"\|Fatal error' /tmp/Drupal*` ]]; then cat /tmp/Drupal*; exit 1; fi
