@@ -11,6 +11,9 @@ mysql:
   username: root
   encoding: utf8
 
+env:
+  - PATH=$PATH:/home/travis/.composer/vendor/bin
+
 install:
   # Install Apache
   - sudo apt-get install apache2 libapache2-mod-fastcgi
